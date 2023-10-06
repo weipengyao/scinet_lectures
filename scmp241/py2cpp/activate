@@ -1,0 +1,23 @@
+#!/bin/bash
+environment_name="py2cpp"
+
+if [[ (("$CLUSTER" != "teach") && ("$CLUSTER" != "niagara"))  ]]
+then
+    echo "Wrong cluster! This script is meant for the SciNet Teach or Niagara clusters."
+fi
+
+# Load appropriate modules
+if [[ "$CLUSTER" = "niagara" ]]
+then
+    module load gcc/12.2.0 python/3.9.8 2> /dev/null
+fi
+
+if [[ "$CLUSTER" = "teach" ]]
+then
+    module load gcc/12.2.0 python/3.9.10 2> /dev/null
+fi
+
+function g++() {
+    command g++ -std=c++20 "$@"
+}
+export -f g++
